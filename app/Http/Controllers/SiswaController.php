@@ -12,6 +12,36 @@ use App\DataSiswa;
 class SiswaController extends Controller
 {
     /**
+     * All Ujian Controller
+     * When user success clicked will retrive callback as ujian
+     * @return response
+     */
+    public function getListUjian()
+    {   
+        $query = Ujian::all();
+
+        if ($query) {
+            foreach($query as $no => $v) {
+                $qPelajaran = Pelajaran::find($query[$no]->pelajaran_id);
+                $res['message'][$no] = [
+                    'kode_ujian' => $query[$no]->kode_ujian,
+                    'pelajaran' => $qPelajaran->nama,
+                    'tipe' => $query[$no]->tipe,
+                    'waktu_mulai' => $this->formatDate($query[$no]->waktu_mulai),
+                    'waktu_selesai' => $this->formatDate($query[$no]->waktu_selesai),
+                    'status' => $query[$no]->status
+                ];
+            }
+            $res['success'] = true;
+            return response($res);
+        } else {
+            $res['success'] = false;
+            $res['message'] = 'Failed to find!';
+            return response($res);
+        }    
+    }
+    
+    /**
      * Select Soal Controller
      * When user success clicked will retrive callback as soal
      * @return response

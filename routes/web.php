@@ -27,6 +27,7 @@ $router->post('/authenticate', 'OtentikasiController@processLogin');
 $router->group(['prefix' => 'user', 'middleware' => 'auth'], function () use ($router) {
     $router->get('/{id}', 'OtentikasiController@get_user');
     $router->group(['prefix' => 'ujian'], function () use ($router) {
+        $router->get('/', 'SiswaController@getListUjian');        
         $router->get('/soal/{kode}', 'SiswaController@getSoal');
     });
 });

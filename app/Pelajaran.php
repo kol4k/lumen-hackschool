@@ -26,7 +26,7 @@ class Pelajaran extends Model
     ];
 
     /**
-     * Function call relation materi
+     * Function call relation soal
      */
     public function cSoal()
     {

@@ -30,4 +30,13 @@ class Controller extends BaseController
         //  $res['jabatan'] = 'test';
          return $res['jabatan'];
      }
+
+    /**
+     * Change Format
+     * @param $value
+     * @return response
+     */
+    public function formatDate($value) {
+        return \Carbon\Carbon::parse($value)->format('M d, Y G:i');
+    }
 }
