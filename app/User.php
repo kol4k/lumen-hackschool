@@ -18,7 +18,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'biodata_id', 'email', 'nis', 'jabatan', 'avatar',
+        'password', 'token_api'
     ];
 
     /**
@@ -27,6 +28,30 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $hidden = [
-        'password',
+        'password', 'token_api'
     ];
+
+    /**
+    * Function call relation users
+    */
+    public function cBiodata()
+    {
+        return $this->hasOne('App\Biodata', 'id');
+    }
+
+    /**
+    * Functionn belongs relations pivot
+    */
+    public function bKelas()
+    {
+        return $this->belongsToMany('App\Kelas');
+    }
+
+    /*
+    * Functionn belongs relations pivot
+    */
+    public function bPelajaran()
+    {
+        return $this->belongsToMany('App\Pelajaran');
+    }
 }

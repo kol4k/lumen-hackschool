@@ -14,3 +14,16 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+/*
+* Middleware Access  User / Public
+*/
+$router->post('/register', 'OtentikasiController@processRegister');
+$router->post('/authenticate', 'OtentikasiController@processLogin');
+
+/*
+* Middleware API Access Administrator / Private
+*/
+$router->group(['prefix' => 'admin', 'middleware' => 'auth'], function () use ($router) {
+    $router->get('/{id}', 'OtentikasiController@get_user');
+});

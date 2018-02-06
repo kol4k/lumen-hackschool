@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
+use App\User;
 
 class Authenticate
 {
@@ -36,9 +37,21 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
         if ($this->auth->guard($guard)->guest()) {
-            return response('Unauthorized.', 401);
+            if ($request->has('token_api')) {
+                $token = $request->input('token_api');
+                $check_token = User::where('token_api', $token)->first();
+                if ($check_token == null) {
+                    $res['success'] = false;
+                    $res['message'] = 'Permission not allowed!';
+                    return response($res,403);
+                }
+            } else {
+                $res['success'] = false;
+                $res['message'] = 'Login please!';
+                return response($res, 401);
+            }
         }
-
-        return $next($request);
+        return $next($request); // return response('Unauthorized.', 401);
     }
 }
+
