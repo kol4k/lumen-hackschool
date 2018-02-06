@@ -259,6 +259,77 @@ class DatabaseSeeder extends Seeder
                 'e' => 'Web World Wide',
                 'jawaban' => 'a'
             ],
+            [
+                'soal' => 'Zat yang tidak dapat diuraikan lagi menjadi zat yang lebih sederhana melalui reaksi kimia biasa disebut?',
+                'gambar_soal' => null,
+                'pelajaran_id' => 1,
+                'a' => 'Unsur',
+                'b' => 'Molekul',
+                'c' => 'Atom',
+                'd' => 'Senyawa',
+                'e' => 'Partikel',
+                'jawaban' => 'a'
+            ],
+            [
+                'soal' => 'Ilmuwan yang berhasil menemukan elektron dan model atom yang menyerupai roti kismis adalah',
+                'gambar_soal' => null,
+                'pelajaran_id' => 1,
+                'a' => 'Niels Bohr',
+                'b' => 'Ernest Rutherford',
+                'c' => 'J.J Thomson',
+                'd' => 'J. Chadwik',
+                'e' => 'Max Planck',
+                'jawaban' => 'c'
+            ],
+            [
+                'soal' => 'Sebuah atom memiliki jumlah elektron 7 dan nomor massanya 19. Berapakah jumlah neutron pada atom tersebut?',
+                'gambar_soal' => null,
+                'pelajaran_id' => 1,
+                'a' => '7',
+                'b' => '19',
+                'c' => '10',
+                'd' => '12',
+                'e' => '14',
+                'jawaban' => 'd'
+            ],
+            [
+                'soal' => 'Dalam satu golongan, besarnya jari-jari atom dari atas ke bawah adalah',
+                'gambar_soal' => null,
+                'pelajaran_id' => 1,
+                'a' => 'Berkurang',
+                'b' => 'Bertambah',
+                'c' => 'Tetap',
+                'd' => 'Mengecil',
+                'e' => 'Tidak berubah',
+                'jawaban' => 'b'
+            ],
+            [
+                'soal' => 'Suatu ikatan dimana pasangan elektron yang dipakai bersama tertarik lebih kuat ke salah satu atom disebut',
+                'gambar_soal' => null,
+                'pelajaran_id' => 1,
+                'a' => 'Ikatan ion',
+                'b' => 'Ikatan kovalen polar',
+                'c' => 'Ikatan van der Wals',
+                'd' => 'Ikatan kovalen koordinat',
+                'e' => 'Ikatan logam',
+                'jawaban' => 'b'
+            ],
         ]);
+        DB::table('ujian')->insert([
+            [
+                'pelajaran_id' => 3,
+                'kode_ujian' => str_random(10),
+                'waktu_mulai' => '2018-02-06 10:00:00',
+                'waktu_selesai' => '2018-02-07 10:00:00',
+                'tipe' => 'UKK',
+                'status' => 'aktif'
+            ],
+        ]);
+        // DB::table('ujian_pelajaran')->insert([
+        //     [
+        //         'pelajaran_id' => 3,
+        //         'kode_ujian' => 1
+        //     ],
+        // ]);
     }
 }

@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pelajaran extends Model
+class Soal extends Model
 {
     /**
      * Table
      */
-    protected $table = 'pelajaran';
+    protected $table = 'soal';
 
     /**
      * Primary Key
@@ -22,14 +22,15 @@ class Pelajaran extends Model
      * @var array
      */
     protected $fillable = [
-        'nama'
+        'soal', 'pelajaran_id', 'gambar_soal',
+        'a', 'b', 'c', 'd', 'e', 'jawaban'
     ];
 
     /**
-     * Function call relation materi
+     * Function return relation soal
      */
-    public function cSoal()
+    public function rSoal()
     {
-        return $this->hasMany('App\Soal');
+        return $this->belongsTo('App\Pelajaran');
     }
 }

@@ -24,6 +24,19 @@ $router->post('/authenticate', 'OtentikasiController@processLogin');
 /*
 * Middleware API Access Administrator / Private
 */
+$router->group(['prefix' => 'user', 'middleware' => 'auth'], function () use ($router) {
+    $router->get('/{id}', 'OtentikasiController@get_user');
+    $router->group(['prefix' => 'ujian'], function () use ($router) {
+        $router->get('/soal/{kode}', 'SiswaController@getSoal');
+    });
+});
+
+/*
+* Middleware API Access Administrator / Private
+*/
 $router->group(['prefix' => 'admin', 'middleware' => 'auth'], function () use ($router) {
     $router->get('/{id}', 'OtentikasiController@get_user');
+    $router->group(['prefix' => 'ujian'], function () use ($router) {
+        $router->get('/soal/{kode}', 'SiswaController@getSoal');
+    });
 });
