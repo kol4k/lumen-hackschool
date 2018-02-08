@@ -16,16 +16,15 @@ $router->get('/', function () use ($router) {
 });
 
 /*
-* Middleware Access  User / Public
+* Middleware Access  Guest / Public
 */
 $router->post('/register', 'OtentikasiController@processRegister');
 $router->post('/authenticate', 'OtentikasiController@processLogin');
 
 /*
-* Middleware API Access Administrator / Private
+* Middleware API Access User / Private
 */
-$router->group(['prefix' => 'user', 'middleware' => 'auth'], function () use ($router) {
-    $router->get('/{id}', 'OtentikasiController@get_user');
+$router->group(['prefix' => 'user', 'middleware' => 'auth','cors'], function () use ($router) {
     $router->group(['prefix' => 'ujian'], function () use ($router) {
         $router->get('/', 'SiswaController@getListUjian');        
         $router->get('/soal/{kode}', 'SiswaController@getSoal');
