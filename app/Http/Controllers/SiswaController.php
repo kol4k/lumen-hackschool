@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Ujian;
+use App\Nilai;
 use App\Pelajaran;
 use App\Soal;
 use App\DataSiswa;
@@ -40,6 +41,50 @@ class SiswaController extends Controller
             return response($res);
         }    
     }
+
+    /**
+     * get Rank Class
+     * When user success clicked will retrive callback as data
+     * @return response
+     */
+    public function rankUjian($id)
+    {
+        $data = Nilai::where('ujian', $id)->get();
+        // $qUser = User::find($data[0]->user);
+        $qUser = User::where('id', function () use ($query) {
+            $query->orWhere(1)->get();
+        });
+        return $data;
+    }
+
+    /**
+     * Select Ujian Controller
+     * When user success clicked will retrive callback as ujian
+     * @return response
+     */
+    public function getUjian($code)
+    {   
+        $query = Ujian::where('kode_ujian', $code)->get();
+
+        if ($query) {
+            $qPelajaran = Pelajaran::find($query[0]->pelajaran_id);
+            $res['message'] = [
+                'id' => $query[0]->id,
+                'kode_ujian' => $query[0]->kode_ujian,
+                'pelajaran' => $qPelajaran->nama,
+                'tipe' => $query[0]->tipe,
+                'waktu_mulai' => $query[0]->waktu_mulai,
+                'waktu_selesai' => $query[0]->waktu_selesai,
+                'status' => $query[0]->status
+            ];
+            $res['success'] = true;
+            return response($res);
+        } else {
+            $res['success'] = false;
+            $res['message'] = 'Failed to find!';
+            return response($res);
+        }    
+    }
     
     /**
      * Select Soal Controller
@@ -63,63 +108,30 @@ class SiswaController extends Controller
     }
 
     /**
-     * Login Controller
-     * When user success login will retrive callback as api_token
+     * Input Nilai Controller
+     * When user success input will retrive callback as nilai
      * @return response
      */
-    public function processLogin(Request $request)
-    {
-        $hasher = app()->make('hash');
-        
-        $username = $request->input('nis');
-        $email = $request->input('email');
-        $password = $request->input('password');
-        
-        $login = User::where('email', $email)->first();
+    public function inputNilai(Request $request)
+    {   
+        $user = $request->user;
+        $ujian = $request->ujian;
+        $nilai = $request->nilai;
 
-        if (!$login) {
-            $res['success'] = false;
-            $res['message'] = 'Your email or password incorrect!';
-            return response($res,403);
+        $query = Nilai::create([
+            'user' => $user,
+            'ujian' => $ujian,
+            'nilai' => $nilai
+        ]);
+
+        if ($query) {
+            $res['success'] = true;
+            $res['message'] = $query;
+            return response($res);
         } else {
-            if ($hasher->check($password,$login->password)) {
-                $api_token = sha1(time());
-                $create_token = User::where('id', $login->id)->update(['token_api' => $api_token]);
-                if ($create_token) {
-                    $res['success'] = true;
-                    $res['api_token'] = $api_token;
-                    $res['user'] = [
-                        'email' => $login->email,
-                        'nis' => (int)$login->nis,
-                        'detail' => $login->cBiodata,
-                        'jabatan' => $this->checkJabatan($login->id, $login->jabatan),
-                    ];
-                    return response($res,200);
-                }
-            } else {
-                $res['success'] = true;
-                $res['message'] = 'Your email or password incorrect!';
-                return response($res,403);
-            }
-        }
-    }
-
-    /**
-    * Test Controller
-    */
-    public function get_user(Request $request, $id)
-    {
-        $user = User::where('id', $id)->get();
-        if ($user) {
-              $res['success'] = true;
-              $res['message'] = $user;
-        
-              return response($res);
-        }else{
-          $res['success'] = false;
-          $res['message'] = 'Cannot find user!';
-        
-          return response($res);
-        }
+            $res['success'] = false;
+            $res['message'] = 'Failed to find!';
+            return response($res);
+        }    
     }
 }

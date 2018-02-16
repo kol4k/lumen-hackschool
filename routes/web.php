@@ -27,7 +27,10 @@ $router->post('/authenticate', 'OtentikasiController@processLogin');
 $router->group(['prefix' => 'user', 'middleware' => 'auth','cors'], function () use ($router) {
     $router->group(['prefix' => 'ujian'], function () use ($router) {
         $router->get('/', 'SiswaController@getListUjian');        
+        $router->get('/{code}', 'SiswaController@getUjian');
         $router->get('/soal/{kode}', 'SiswaController@getSoal');
+        $router->post('/result_nilai', 'SiswaController@inputNilai'); 
+        $router->get('/rank/{id}', 'SiswaController@rankUjian');       
     });
 });
 

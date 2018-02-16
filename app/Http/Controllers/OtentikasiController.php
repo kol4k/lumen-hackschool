@@ -66,6 +66,7 @@ class OtentikasiController extends Controller
                     $res['success'] = true;
                     $res['api_token'] = $api_token;
                     $res['user'] = [
+                        'id' => $login->id,
                         'email' => $login->email,
                         'nis' => (int)$login->nis,
                         'detail' => $login->cBiodata,
