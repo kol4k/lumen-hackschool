@@ -15,8 +15,6 @@ class Users extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('biodata_id')->unsigned()->nullable();
-            $table->foreign('biodata_id')->references('id')->on('biodatas');
             $table->string('email',90)->unique();
             $table->string('nis',90)->unique();
             $table->string('password',251);

@@ -63,45 +63,64 @@ class DatabaseSeeder extends Seeder
                 'email' => 'afifsalman01@gmail.com',
                 'nis' => '100000020321',
                 'password' => $hasher->make('123456'),
-                'jabatan' => 'Administrator',
-                'biodata_id' => 1
+                'jabatan' => 'Administrator'
             ],
             [
                 'email' => 'valentina@gmail.com',
                 'nis' => '100000020354',
                 'password' => $hasher->make('123456'),
-                'jabatan' => 'Guru',
-                'biodata_id' => 2
+                'jabatan' => 'Guru'
             ],
             [
                 'email' => 'rafinyadi@gmail.com',
                 'nis' => '100000020201',
                 'password' => $hasher->make('123456'),
-                'jabatan' => 'Siswa',
-                'biodata_id' => 3
+                'jabatan' => 'Siswa'
             ],
-
             [
                 'email' => 'justini23@gmail.com',
                 'nis' => '100000020203',
                 'password' => $hasher->make('123456'),
-                'jabatan' => 'Siswa',
-                'biodata_id' => 4
+                'jabatan' => 'Siswa'
             ],
             [
                 'email' => 'alexandra@gmail.com',
                 'nis' => '100000020205',
                 'password' => $hasher->make('123456'),
-                'jabatan' => 'Siswa',
-                'biodata_id' => 5
+                'jabatan' => 'Siswa'
             ],
             [
                 'email' => 'slametriyadi22@gmail.com',
                 'nis' => '100000020394',
                 'password' => $hasher->make('123456'),
-                'jabatan' => 'Guru',
-                'biodata_id' => 6
+                'jabatan' => 'Guru'
             ],
+        ]);
+        DB::table('biodata_user')->insert([
+            [
+                'user_id' => 1,
+                'biodata_id' => 1
+            ],
+            [
+                'user_id' => 2,
+                'biodata_id' => 2
+            ],
+            [
+                'user_id' => 3,
+                'biodata_id' => 3
+            ],
+            [
+                'user_id' => 4,
+                'biodata_id' => 4
+            ],
+            [
+                'user_id' => 5,
+                'biodata_id' => 5
+            ],
+            [
+                'user_id' => 6,
+                'biodata_id' => 6
+            ]
         ]);
         DB::table('kelas')->insert([
             [
