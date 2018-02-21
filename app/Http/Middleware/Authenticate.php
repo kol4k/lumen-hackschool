@@ -37,19 +37,7 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
         if ($this->auth->guard($guard)->guest()) {
-            if ($request->has('token_api')) {
-                $token = $request->input('token_api');
-                $check_token = User::where('token_api', $token)->first();
-                if ($check_token == null) {
-                    $res['success'] = false;
-                    $res['message'] = 'Permission not allowed!';
-                    return response($res,403);
-                }
-            } else {
-                $res['success'] = false;
-                $res['message'] = 'Login please!';
-                return response($res, 401);
-            }
+            return response('Unauthorized.', 401);
         }
         return $next($request); // return response('Unauthorized.', 401);
     }

@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -15,6 +15,15 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+
+$router->get('/testx', ['middleware' => 'auth', function (Request $request) {
+    if(Auth::id()) {
+        dd(Auth::id());
+    } else {
+        dd(Auth::id());        
+    }
+}]);
+
 /*
 * Middleware Access  Guest / Public
 */
@@ -25,12 +34,16 @@ $router->post('/authenticate', 'OtentikasiController@processLogin');
 * Middleware API Access User / Private
 */
 $router->group(['prefix' => 'user', 'middleware' => 'auth','cors'], function () use ($router) {
+    $router->group(['prefix' => 'report'], function () use ($router) {
+        $router->get('/nilai', 'SiswaController@listNilai');
+    });
+    
     $router->group(['prefix' => 'ujian'], function () use ($router) {
         $router->get('/', 'SiswaController@getListUjian');        
         $router->get('/{code}', 'SiswaController@getUjian');
         $router->get('/soal/{kode}', 'SiswaController@getSoal');
         $router->post('/result_nilai', 'SiswaController@inputNilai'); 
-        $router->get('/rank/{id}', 'SiswaController@rankUjian');       
+        $router->get('/rank/{id}', 'SiswaController@rankUjian');
     });
 });
 

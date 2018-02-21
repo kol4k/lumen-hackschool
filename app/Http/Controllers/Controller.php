@@ -39,4 +39,11 @@ class Controller extends BaseController
     public function formatDate($value) {
         return \Carbon\Carbon::parse($value)->format('M d, Y G:i');
     }
+
+    /**
+     * now Function
+     */
+    public function now() {
+        return \Carbon\Carbon::now();
+    }
 }
